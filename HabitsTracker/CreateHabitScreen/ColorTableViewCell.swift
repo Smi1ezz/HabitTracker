@@ -57,6 +57,7 @@ class ColorTableViewCell: UITableViewCell {
     
     @objc func presentColorPickerVC() {
         self.delegate.changeViewController()
+        
 //        let colorPickerVC = UIColorPickerViewController()
 //        colorPickerVC.delegate = self
 //        colorPickerVC.selectedColor = colorPickerButton.backgroundColor ?? .orange
