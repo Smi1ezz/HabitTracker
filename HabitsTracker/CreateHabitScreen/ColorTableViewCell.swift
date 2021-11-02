@@ -17,8 +17,6 @@ class ColorTableViewCell: UITableViewCell {
         return colorPickerButton
     }()
     
-    var delegate: ActionCellProtocol!
-    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupColorTVCell()
@@ -56,23 +54,26 @@ class ColorTableViewCell: UITableViewCell {
     }
     
     @objc func presentColorPickerVC() {
-        self.delegate.changeViewController()
+        print("colorButtonPressed")
+
+        let colorPickerVC = UIColorPickerViewController()
+        colorPickerVC.delegate = self
+        colorPickerVC.selectedColor = colorPickerButton.backgroundColor ?? .orange
+        colorPickerVC.title = "Выбери цвет"
         
-//        let colorPickerVC = UIColorPickerViewController()
-//        colorPickerVC.delegate = self
-//        colorPickerVC.selectedColor = colorPickerButton.backgroundColor ?? .orange
-//        colorPickerVC.title = "Выбери цвет"
-//
 //        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//        if let newViewController: UIColorPickerViewController = storyboard.instantiateViewController(withIdentifier: "UIColorPickerViewController") as? UIColorPickerViewController {
-//            newViewController.delegate = self
-//            newViewController.selectedColor = colorPickerButton.backgroundColor ?? .purple
+//        if let newViewController = storyboard.instantiateViewController(withIdentifier: "CreateViewController") as? CreateViewController {
 //            newViewController.present(colorPickerVC, animated: true)
-//           }
-//        UIApplication.shared.keyWindow?.rootViewController?.present(colorPickerVC, animated: true)
+//        }
+        UIApplication.shared.keyWindow?.rootViewController?.present(colorPickerVC, animated: true)
 
     }
 }
 
-
+//MARK: UIColorPicker delegte
+extension ColorTableViewCell: UIColorPickerViewControllerDelegate {
+    func colorPickerViewControllerDidSelectColor(_ viewController: UIColorPickerViewController) {
+        colorPickerButton.backgroundColor = viewController.selectedColor
+    }
+}
 

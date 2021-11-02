@@ -89,7 +89,6 @@ extension CreateViewController: UITableViewDataSource {
             return cell
         case 1:
             let cell = tableView.dequeueReusableCell(withIdentifier: colorTVCellID) as! ColorTableViewCell
-            cell.delegate = self
             return cell
         case 2:
             let cell = tableView.dequeueReusableCell(withIdentifier: dateTTVCellID) as! DateTableViewCell
@@ -105,29 +104,4 @@ extension CreateViewController: UITableViewDelegate {
     
 }
 
-//MARK: actionCellProtocol
-extension CreateViewController: ActionCellProtocol {
-    func changeViewController() {
-        let cell = self.createTableView.dequeueReusableCell(withIdentifier: colorTVCellID) as! ColorTableViewCell
-        
-        
-        let colorPickerVC = UIColorPickerViewController()
-        colorPickerVC.delegate = cell as? UIColorPickerViewControllerDelegate
-        colorPickerVC.selectedColor = cell.colorPickerButton.backgroundColor ?? .orange
-        colorPickerVC.title = "Выбери цвет"
-        
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        if let newViewController = storyboard.instantiateViewController(withIdentifier: "CreateViewController") as? CreateViewController {
-            newViewController.present(colorPickerVC, animated: true)
-        }
-    }
-}
 
-//MARK: UIColorPicker delegte
-extension CreateViewController: UIColorPickerViewControllerDelegate {
-    func colorPickerViewControllerDidSelectColor(_ viewController: UIColorPickerViewController) {
-        let cell = self.createTableView.dequeueReusableCell(withIdentifier: colorTVCellID) as! ColorTableViewCell
-        
-        cell.colorPickerButton.backgroundColor = viewController.selectedColor
-    }
-}

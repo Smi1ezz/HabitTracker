@@ -8,6 +8,8 @@
 import Foundation
 
 /*
+ НЕ ИСПОЛЬЗОВАЛ В ТЕКУЩЕЙ ВЕРСИИ
+ 
  протокол для создания переходов между viewController'ами из ячеек TableViewCell или CollectionViewCell через создание делегатов. Решает проблему с возникновением ошибки Attempt to present whose view is not in the window hierarchy!
  // 1.
  protocol PlayVideoCellProtocol {
