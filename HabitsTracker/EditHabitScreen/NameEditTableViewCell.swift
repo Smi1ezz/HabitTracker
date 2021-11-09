@@ -1,13 +1,13 @@
 //
-//  CreateTableViewCell.swift
+//  NameTableViewCell.swift
 //  HabitsTracker
 //
-//  Created by admin on 28.10.2021.
+//  Created by admin on 08.11.2021.
 //
 
 import UIKit
 
-class NameTableViewCell: UITableViewCell {
+class NameEditTableViewCell: UITableViewCell {
     
     private let nameTextField: UITextField = {
         let name = UITextField()
@@ -26,16 +26,6 @@ class NameTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-       
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-        name = self.nameTextField.text
-    }
-    
     func setupNameCell() {
         contentView.addSubview(nameTextField)
         contentView.backgroundColor = .cyan
@@ -48,6 +38,16 @@ class NameTableViewCell: UITableViewCell {
             nameTextField.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             nameTextField.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 15)
         ])
+    }
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+       
+    }
+
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+        name = self.nameTextField.text
     }
 
 }

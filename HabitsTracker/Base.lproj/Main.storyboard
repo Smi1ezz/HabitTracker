@@ -46,10 +46,10 @@
             </objects>
             <point key="canvasLocation" x="1483" y="-404"/>
         </scene>
-        <!--Habits View Controller-->
+        <!--Сегодня тайтл-->
         <scene sceneID="P5b-4h-9g0">
             <objects>
-                <viewController id="cPo-hK-kOo" customClass="HabitsViewController" customModule="HabitsTracker" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController restorationIdentifier="Сегодня2" storyboardIdentifier="Сегодня" title="Сегодня тайтл" id="cPo-hK-kOo" customClass="HabitsViewController" customModule="HabitsTracker" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="tiO-W8-t6Z">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -123,7 +123,22 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IHz-Px-Cnh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3230" y="-1072"/>
+            <point key="canvasLocation" x="2251" y="-1077"/>
+        </scene>
+        <!--Edit-->
+        <scene sceneID="bH0-jb-tih">
+            <objects>
+                <viewController storyboardIdentifier="EditViewController" title="Edit" useStoryboardIdentifierAsRestorationIdentifier="YES" id="TEZ-d7-ucC" customClass="EditViewController" customModule="HabitsTracker" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="l5x-5j-oxq">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="geq-Md-7S7"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="VAE-Es-v5Z" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3229" y="-1077"/>
         </scene>
     </scenes>
     <resources>

@@ -15,6 +15,10 @@
 		8401DAED272ADEF90022B7FA /* DateTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8401DAEC272ADEF90022B7FA /* DateTableViewCell.swift */; };
 		8401DAF1272C17BD0022B7FA /* SrtingExtensionChangeColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8401DAF0272C17BD0022B7FA /* SrtingExtensionChangeColor.swift */; };
 		8401DAF527300F2D0022B7FA /* ActionCellProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8401DAF427300F2D0022B7FA /* ActionCellProtocol.swift */; };
+		8401DAFA2739538C0022B7FA /* EditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8401DAF92739538C0022B7FA /* EditViewController.swift */; };
+		8401DAFC273954560022B7FA /* NameEditTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8401DAFB273954560022B7FA /* NameEditTableViewCell.swift */; };
+		8401DAFE273954740022B7FA /* ColorEditTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8401DAFD273954740022B7FA /* ColorEditTableViewCell.swift */; };
+		8401DB00273954850022B7FA /* DateEditTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8401DAFF273954850022B7FA /* DateEditTableViewCell.swift */; };
 		84BE1FFF27281E22002A1B69 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BE1FFE27281E22002A1B69 /* AppDelegate.swift */; };
 		84BE200127281E22002A1B69 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BE200027281E22002A1B69 /* SceneDelegate.swift */; };
 		84BE200627281E22002A1B69 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84BE200427281E22002A1B69 /* Main.storyboard */; };
@@ -58,6 +62,10 @@
 		8401DAEC272ADEF90022B7FA /* DateTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTableViewCell.swift; sourceTree = "<group>"; };
 		8401DAF0272C17BD0022B7FA /* SrtingExtensionChangeColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SrtingExtensionChangeColor.swift; sourceTree = "<group>"; };
 		8401DAF427300F2D0022B7FA /* ActionCellProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionCellProtocol.swift; sourceTree = "<group>"; };
+		8401DAF92739538C0022B7FA /* EditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditViewController.swift; sourceTree = "<group>"; };
+		8401DAFB273954560022B7FA /* NameEditTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameEditTableViewCell.swift; sourceTree = "<group>"; };
+		8401DAFD273954740022B7FA /* ColorEditTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorEditTableViewCell.swift; sourceTree = "<group>"; };
+		8401DAFF273954850022B7FA /* DateEditTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateEditTableViewCell.swift; sourceTree = "<group>"; };
 		84BE1FFB27281E21002A1B69 /* HabitsTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HabitsTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84BE1FFE27281E22002A1B69 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		84BE200027281E22002A1B69 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -140,6 +148,17 @@
 			path = StringExtensionToChangeColor;
 			sourceTree = "<group>";
 		};
+		8401DAF8273953270022B7FA /* EditHabitScreen */ = {
+			isa = PBXGroup;
+			children = (
+				8401DAF92739538C0022B7FA /* EditViewController.swift */,
+				8401DAFB273954560022B7FA /* NameEditTableViewCell.swift */,
+				8401DAFD273954740022B7FA /* ColorEditTableViewCell.swift */,
+				8401DAFF273954850022B7FA /* DateEditTableViewCell.swift */,
+			);
+			path = EditHabitScreen;
+			sourceTree = "<group>";
+		};
 		84BE1FF227281E21002A1B69 = {
 			isa = PBXGroup;
 			children = (
@@ -166,6 +185,7 @@
 				8401DAF227300EAF0022B7FA /* ActionCellProtocol */,
 				8401DAE3272AAFAD0022B7FA /* DetailsScreen */,
 				8401DADB27298BA10022B7FA /* CreateHabitScreen */,
+				8401DAF8273953270022B7FA /* EditHabitScreen */,
 				84BE20302728279C002A1B69 /* HabitsStore */,
 				84BE203527283B44002A1B69 /* MainScreen */,
 				84BE203627283B58002A1B69 /* InfoScreen */,
@@ -368,14 +388,18 @@
 				8401DAED272ADEF90022B7FA /* DateTableViewCell.swift in Sources */,
 				8401DADD27298BCA0022B7FA /* CreateViewController.swift in Sources */,
 				84BE202F27282789002A1B69 /* HabitsStore.swift in Sources */,
+				8401DAFA2739538C0022B7FA /* EditViewController.swift in Sources */,
 				8401DAE9272ADB440022B7FA /* NameTableViewCell.swift in Sources */,
 				84BE1FFF27281E22002A1B69 /* AppDelegate.swift in Sources */,
 				84BE204127293CA7002A1B69 /* HabitCollectionViewCell.swift in Sources */,
+				8401DAFE273954740022B7FA /* ColorEditTableViewCell.swift in Sources */,
+				8401DB00273954850022B7FA /* DateEditTableViewCell.swift in Sources */,
 				8401DAEB272ADEEC0022B7FA /* ColorTableViewCell.swift in Sources */,
 				8401DAE7272AAFF70022B7FA /* HabitDetailsViewController.swift in Sources */,
 				8401DAF1272C17BD0022B7FA /* SrtingExtensionChangeColor.swift in Sources */,
 				84BE203227283AD6002A1B69 /* HabitsViewController.swift in Sources */,
 				84BE203827284154002A1B69 /* TabBarController.swift in Sources */,
+				8401DAFC273954560022B7FA /* NameEditTableViewCell.swift in Sources */,
 				84BE203427283AEC002A1B69 /* InfoViewController.swift in Sources */,
 				84BE200127281E22002A1B69 /* SceneDelegate.swift in Sources */,
 				84BE203F27293C9B002A1B69 /* ProgressCollectionViewCell.swift in Sources */,

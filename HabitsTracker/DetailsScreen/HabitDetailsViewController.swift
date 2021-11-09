@@ -11,13 +11,28 @@ class HabitDetailsViewController: UIViewController {
     
     let detailTableView = UITableView(frame: .zero, style: .grouped)
     let detailTVCellID = "detailTVCell"
+    
+    lazy var editBarButton: UIBarButtonItem = {
+        let edit = UIBarButtonItem(title: "Править", style: .plain, target: self, action: #selector(editButtonAction))
+        edit.tintColor = UIColor.appColour(name: .purple)
+        return edit
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(detailTableView)
+        navigationItem.rightBarButtonItem = editBarButton
         setupTableView()
         setupTableViewConstraints()
 
+    }
+    
+    @objc func editButtonAction() {
+        print("edit")
+        if let vc = storyboard?.instantiateViewController(withIdentifier: "EditViewController") {
+            print("edit ok")
+            navigationController?.pushViewController(vc, animated: true)
+        }
     }
     
     func setupTableView() {
@@ -40,6 +55,11 @@ class HabitDetailsViewController: UIViewController {
 
 //MARK: datasourse
 extension HabitDetailsViewController: UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return "Активность".uppercased()
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return HabitsStore.shared.dates.count
         
@@ -47,10 +67,11 @@ extension HabitDetailsViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: detailTVCellID) as! HabitDetailsTableViewCell
-        
+         
         let dateFormatter = DateFormatter()
+        
+        dateFormatter.dateFormat = "dd.MM.yy"
         cell.dateLabel.text = dateFormatter.string(from: HabitsStore.shared.dates[indexPath.row])
-//        cell.habit = HabitsStore.shared.habits[0]
         return cell
     }
 }

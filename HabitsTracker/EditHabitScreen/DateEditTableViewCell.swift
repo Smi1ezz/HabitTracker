@@ -2,12 +2,12 @@
 //  DateTableViewCell.swift
 //  HabitsTracker
 //
-//  Created by admin on 28.10.2021.
+//  Created by admin on 08.11.2021.
 //
 
 import UIKit
 
-class DateTableViewCell: UITableViewCell {
+class DateEditTableViewCell: UITableViewCell {
     
     let dateTextField: UILabel = {
        let date = UILabel()
@@ -67,10 +67,13 @@ class DateTableViewCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
+        // Initialization code
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
+
+        // Configure the view for the selected state
     }
 
 }

@@ -67,6 +67,7 @@ class HabitCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(counterLabel)
         contentView.addSubview(circleImageView)
         contentView.backgroundColor = .yellow
+        contentView.layer.cornerRadius = 8
         setupHabitCellConstraints()
     }
     

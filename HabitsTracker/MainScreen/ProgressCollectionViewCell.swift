@@ -12,7 +12,7 @@ class ProgressCollectionViewCell: UICollectionViewCell {
         let motivation = UILabel()
         motivation.text = {
             return "Все получится"
-        }() //хочу сделать, чтобы мотивационный текст менялся или рандомно из нескольких фрах, или а зависимости от прогресса
+        }() //хочу сделать, чтобы мотивационный текст менялся или рандомно из нескольких фраз, или в зависимости от прогресса
         motivation.textColor = UIColor.appColour(name: .sysGray)
         motivation.font = UIFont.systemFont(ofSize: 13, weight: .regular)
         motivation.backgroundColor = .yellow
@@ -40,6 +40,8 @@ class ProgressCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(percentLabel)
         contentView.addSubview(progressBar)
         contentView.backgroundColor = .green
+        contentView.layer.cornerRadius = 8
+        progressBar.layer.cornerRadius = 5
         setupConstraints()
     }
     
@@ -61,7 +63,8 @@ class ProgressCollectionViewCell: UICollectionViewCell {
             progressBar.topAnchor.constraint(equalTo: motivationLabel.bottomAnchor, constant: 10),
             progressBar.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 12),
             progressBar.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -12),
-            progressBar.bottomAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.bottomAnchor, constant: -15)
+            progressBar.bottomAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.bottomAnchor, constant: -15),
+            progressBar.heightAnchor.constraint(equalToConstant: 7)
         ])
     }
     

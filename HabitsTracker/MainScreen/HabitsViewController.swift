@@ -30,25 +30,47 @@ class HabitsViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .green
-        navigationController?.isNavigationBarHidden = false
-        navigationController?.title = "Сегодня"
-        navigationItem.rightBarButtonItem = createBarButton
         view.addSubview(habitsCollectionView)
         setupHabitsCollectionView()
         setupHabitsCVConstraints()
+        setupNavigationBar()
     }
     
-    func setupHabitsCollectionView() {
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.navigationBar.prefersLargeTitles = true
+
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.navigationBar.prefersLargeTitles = false
+
+    }
+    
+    private func setupNavigationBar() {
+        
+        let navigationBar = navigationController?.navigationBar
+        let navigationBarAppearance = UINavigationBarAppearance()
+//        navigationBarAppearance.shadowColor = .init(red: 249, green: 90, blue: 67, alpha: 0.29)
+        navigationBarAppearance.shadowColor = .lightGray
+        navigationBar?.isTranslucent = false
+        navigationBar?.backgroundColor = UIColor(red: 249, green: 249, blue: 249, alpha: 0.94)
+        navigationBar?.scrollEdgeAppearance = navigationBarAppearance
+        navigationItem.title = "Сегодня:"
+
+        navigationItem.rightBarButtonItem = createBarButton
+    }
+    
+    private func setupHabitsCollectionView() {
         habitsCollectionView.translatesAutoresizingMaskIntoConstraints = false
         habitsCollectionView.register(ProgressCollectionViewCell.self, forCellWithReuseIdentifier: progressCellID)
         habitsCollectionView.register(HabitCollectionViewCell.self, forCellWithReuseIdentifier: habitCellID)
         habitsCollectionView.dataSource = self
         habitsCollectionView.delegate = self
-        
     }
     
-    func setupHabitsCVConstraints() {
+    private func setupHabitsCVConstraints() {
         NSLayoutConstraint.activate([
             habitsCollectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             habitsCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
@@ -58,7 +80,6 @@ class HabitsViewController: UIViewController {
     }
     
     @objc func createButtonAction() {
-        
         if let vc = storyboard?.instantiateViewController(withIdentifier: "CreateViewController") {
             print("ok")
             navigationController?.pushViewController(vc, animated: true)
@@ -93,7 +114,6 @@ extension HabitsViewController: UICollectionViewDataSource {
         switch indexPath.section {
         case 0:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: progressCellID, for: indexPath) as! ProgressCollectionViewCell
-            
             return cell
         case 1:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: habitCellID, for: indexPath) as! HabitCollectionViewCell
@@ -109,20 +129,31 @@ extension HabitsViewController: UICollectionViewDataSource {
 }
 
 extension HabitsViewController: UICollectionViewDelegateFlowLayout {
+    
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
         switch indexPath.section {
         case 0:
-            return CGSize(width: UIScreen.main.bounds.width, height: 60)
+            return CGSize(width: UIScreen.main.bounds.width - 31, height: 60)
         case 1:
-            return CGSize(width: UIScreen.main.bounds.width, height: 130)
+            return CGSize(width: UIScreen.main.bounds.width - 31, height: 130)
         default:
-            return CGSize(width: UIScreen.main.bounds.width, height: 90)
+            return CGSize(width: UIScreen.main.bounds.width - 31, height: 90)
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 12, left: 15, bottom: 12, right: 16)
+        
+        switch section {
+        case 0:
+            return UIEdgeInsets(top: 22, left: 16, bottom: 12, right: 17)
+        case 1:
+            return UIEdgeInsets(top: 6, left: 16, bottom: 6, right: 17)
+        default:
+            return UIEdgeInsets(top: 6, left: 16, bottom: 6, right: 17)
+        }
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -133,12 +164,12 @@ extension HabitsViewController: UICollectionViewDelegateFlowLayout {
             print("section \(indexPath.section), item \(indexPath.item)")
             if let vc = storyboard?.instantiateViewController(withIdentifier: "HabitDetailsViewController") {
                 print("ok")
+                vc.title = "\(HabitsStore.shared.habits[indexPath.item].name)"
                 navigationController?.pushViewController(vc, animated: true)
             }
         default:
             print("section \(indexPath.section), item \(indexPath.item)")
         }
-        print("section \(indexPath.section), item \(indexPath.item)")
     }
 }
 
