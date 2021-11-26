@@ -9,46 +9,50 @@ import UIKit
 
 class HabitCollectionViewCell: UICollectionViewCell {
     
+    var delegete: HabitsViewController!
+    
     var habit: Habit? {
         didSet {
             if let habit = habit {
                 nameLabel.text = habit.name
                 timerLabel.text = habit.dateString
-                counterLabel.text = String(habit.trackDates.count)
-                circleImageView.image = {
-                    if habit.isAlreadyTakenToday {
-                        return UIImage(systemName: "circle")
-                    } else {
-                        return UIImage(systemName: "checkmark.circle.fill")
-                    }
-                }()
-                circleImageView.tintColor = habit.color
+                counterLabel.text = String("Счетчик: \(habit.trackDates.count)")
+                
+                if habit.isAlreadyTakenToday {
+                    let img = UIImage(systemName: "checkmark.circle.fill")
+                    circleButton.setBackgroundImage(img, for: .normal)
+                } else {
+                    let img = UIImage(systemName: "circle")
+                    circleButton.setBackgroundImage(img, for: .normal)
+                }
 
+                circleButton.tintColor = habit.color
+                
             }
         }
     }
     
     let nameLabel: UILabel = {
         let name = UILabel()
-        name.backgroundColor = .green
+        name.headlineStyle()
         return name
     }()
     
     let timerLabel: UILabel = {
         let timer = UILabel()
-        timer.backgroundColor = .blue
+        timer.captionStyle()
         return timer
     }()
     
     let counterLabel: UILabel = {
         let counter = UILabel()
-        counter.backgroundColor = .yellow
+        counter.statusFootnoteStyle()
         return counter
     }()
     
-    let circleImageView: UIImageView = {
-        let circle = UIImageView()
-        circle.backgroundColor = .red
+    let circleButton: UIButton = {
+        let circle = UIButton()
+        circle.addTarget(self, action: #selector(circleButtonAction), for: .touchUpInside)
         return circle
     }()
     
@@ -62,18 +66,18 @@ class HabitCollectionViewCell: UICollectionViewCell {
     }
     
     func setupHabitCell() {
+        contentView.backgroundColor = .white
         contentView.addSubview(nameLabel)
         contentView.addSubview(timerLabel)
         contentView.addSubview(counterLabel)
-        contentView.addSubview(circleImageView)
-        contentView.backgroundColor = .yellow
+        contentView.addSubview(circleButton)
         contentView.layer.cornerRadius = 8
         setupHabitCellConstraints()
     }
     
     func setupHabitCellConstraints() {
         
-        for i in [nameLabel, timerLabel, counterLabel, circleImageView] {
+        for i in [nameLabel, timerLabel, counterLabel, circleButton] {
             i.translatesAutoresizingMaskIntoConstraints = false
         }
         
@@ -88,10 +92,24 @@ class HabitCollectionViewCell: UICollectionViewCell {
             counterLabel.leadingAnchor.constraint(equalTo: nameLabel.leadingAnchor),
             counterLabel.bottomAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.bottomAnchor, constant: -20),
             
-            circleImageView.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.33),
-            circleImageView.widthAnchor.constraint(equalTo: circleImageView.heightAnchor),
-            circleImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            circleImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -25)
+            circleButton.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.33),
+            circleButton.widthAnchor.constraint(equalTo: circleButton.heightAnchor),
+            circleButton.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            circleButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -25)
         ])
     }
+    
+    @objc func circleButtonAction() {
+        if let safehabit = habit {
+            guard safehabit.isAlreadyTakenToday == false else {
+                safehabit.trackDates.removeLast()
+                HabitsStore.shared.save()
+                delegete.habitsCollectionView.reloadData()
+                return
+            }
+            HabitsStore.shared.track(safehabit)
+            delegete.habitsCollectionView.reloadData()
+        }
+    }
+
 }

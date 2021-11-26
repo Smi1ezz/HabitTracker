@@ -32,7 +32,7 @@
             <objects>
                 <navigationController id="1k3-O5-DMZ" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Habits" id="IhE-yh-0gd" userLabel="Habits">
-                        <imageReference key="image" image="list.bullet" catalog="system" symbolScale="large"/>
+                        <imageReference key="image" image="rectangle.grid.1x2.fill" catalog="system" symbolScale="large"/>
                     </tabBarItem>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="uVL-XU-wbs">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
@@ -113,7 +113,7 @@
         <!--CreateViewController-->
         <scene sceneID="HW0-s2-PMK">
             <objects>
-                <viewController restorationIdentifier="CreateViewController" storyboardIdentifier="CreateViewController" title="CreateViewController" id="OHd-9j-wsh" customClass="CreateViewController" customModule="HabitsTracker" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController restorationIdentifier="HabitViewController" storyboardIdentifier="HabitViewController" title="CreateViewController" id="OHd-9j-wsh" customClass="HabitViewController" customModule="HabitsTracker" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="D7e-2R-RXm">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -143,7 +143,7 @@
     </scenes>
     <resources>
         <image name="info.circle.fill" catalog="system" width="128" height="121"/>
-        <image name="list.bullet" catalog="system" width="128" height="88"/>
+        <image name="rectangle.grid.1x2.fill" catalog="system" width="128" height="101"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

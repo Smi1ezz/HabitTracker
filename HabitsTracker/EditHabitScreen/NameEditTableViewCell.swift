@@ -9,9 +9,12 @@ import UIKit
 
 class NameEditTableViewCell: UITableViewCell {
     
-    private let nameTextField: UITextField = {
+    var delegate: EditViewController!
+    
+    let nameTextField: UITextField = {
         let name = UITextField()
         name.placeholder = "К чему будем привыкать?"
+        
         return name
     }()
     
@@ -20,6 +23,7 @@ class NameEditTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupNameCell()
+        self.becomeFirstResponder()
     }
     
     required init?(coder: NSCoder) {
@@ -27,6 +31,7 @@ class NameEditTableViewCell: UITableViewCell {
     }
     
     func setupNameCell() {
+        nameTextField.delegate = self
         contentView.addSubview(nameTextField)
         contentView.backgroundColor = .cyan
         setupNameCellConstraints()
@@ -47,7 +52,23 @@ class NameEditTableViewCell: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-        name = self.nameTextField.text
+        
     }
-
+    
 }
+
+//MARK: textfield delegate func
+extension NameEditTableViewCell: UITextFieldDelegate {
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        delegate.habit.name = nameTextField.text ?? "name from EditVC Return"
+        nameTextField.resignFirstResponder()
+        return true
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        delegate.habit.name = nameTextField.text ?? "name from EditVC didEnd"
+        nameTextField.resignFirstResponder()
+    }
+}
+

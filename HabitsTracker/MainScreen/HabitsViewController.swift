@@ -9,19 +9,19 @@ import UIKit
 
 class HabitsViewController: UIViewController {
     
-    let a1 = Habit(name: "a1", date: NSDate.now, trackDates: [NSDate.now], color: UIColor.appColour(name: .purple))
+    //MARK: УДАЛИТЬ - создание привычки для проверки кода
+    let a1 = Habit(name: "a1", date: NSDate.now, trackDates: [NSDate.now], color: UIColor.appColour(name: .indigo))
     
     
     let habitsCollectionView: UICollectionView = {
         let flowLayout = UICollectionViewFlowLayout()
         let habitsCollectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
-        
+        habitsCollectionView.backgroundColor = .appColour(name: .grayLight)
         return habitsCollectionView
     }()
     
     lazy var createBarButton: UIBarButtonItem = {
         let create = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(createButtonAction))
-        create.tintColor = UIColor.appColour(name: .purple)
         return create
     }()
     
@@ -38,27 +38,24 @@ class HabitsViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.navigationBar.prefersLargeTitles = true
-
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        navigationController?.navigationBar.prefersLargeTitles = false
+        //MARK: УДАЛИТЬ-стрка для обнуления массива привычек
+//        HabitsStore.shared.habits = []
+        habitsCollectionView.reloadData()
 
     }
     
     private func setupNavigationBar() {
-        
+        //MARK: создание границы навиКонтроллера(линия внизу)
         let navigationBar = navigationController?.navigationBar
         let navigationBarAppearance = UINavigationBarAppearance()
-//        navigationBarAppearance.shadowColor = .init(red: 249, green: 90, blue: 67, alpha: 0.29)
+        //MARK: УДАЛИТЬ - с этм цветом shadowColor sпочему-то не работает
+//        navigationBarAppearance.shadowColor = .init(red: 60, green: 60, blue: 67, alpha: 0.29)
         navigationBarAppearance.shadowColor = .lightGray
-        navigationBar?.isTranslucent = false
-        navigationBar?.backgroundColor = UIColor(red: 249, green: 249, blue: 249, alpha: 0.94)
         navigationBar?.scrollEdgeAppearance = navigationBarAppearance
+        
+        navigationBar?.prefersLargeTitles = true
+        navigationItem.largeTitleDisplayMode = .always
         navigationItem.title = "Сегодня:"
-
         navigationItem.rightBarButtonItem = createBarButton
     }
     
@@ -68,6 +65,7 @@ class HabitsViewController: UIViewController {
         habitsCollectionView.register(HabitCollectionViewCell.self, forCellWithReuseIdentifier: habitCellID)
         habitsCollectionView.dataSource = self
         habitsCollectionView.delegate = self
+
     }
     
     private func setupHabitsCVConstraints() {
@@ -80,7 +78,7 @@ class HabitsViewController: UIViewController {
     }
     
     @objc func createButtonAction() {
-        if let vc = storyboard?.instantiateViewController(withIdentifier: "CreateViewController") {
+        if let vc = storyboard?.instantiateViewController(withIdentifier: "HabitViewController") {
             print("ok")
             navigationController?.pushViewController(vc, animated: true)
         }
@@ -114,11 +112,13 @@ extension HabitsViewController: UICollectionViewDataSource {
         switch indexPath.section {
         case 0:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: progressCellID, for: indexPath) as! ProgressCollectionViewCell
+            cell.percentLabel.text = String(NSString(format: "%.0f", HabitsStore.shared.todayProgress*100)) + "%"
+            cell.progressBar.progress = HabitsStore.shared.todayProgress
             return cell
         case 1:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: habitCellID, for: indexPath) as! HabitCollectionViewCell
-            cell.habit = a1
-            cell.habit?.color = UIColor.appColour(name: .purple)
+            cell.habit = HabitsStore.shared.habits[indexPath.row]
+            cell.delegete = self
             return cell
         default:
             return UICollectionViewCell()
@@ -135,11 +135,11 @@ extension HabitsViewController: UICollectionViewDelegateFlowLayout {
         
         switch indexPath.section {
         case 0:
-            return CGSize(width: UIScreen.main.bounds.width - 31, height: 60)
+            return CGSize(width: UIScreen.main.bounds.width - 33, height: 60)
         case 1:
-            return CGSize(width: UIScreen.main.bounds.width - 31, height: 130)
+            return CGSize(width: UIScreen.main.bounds.width - 33, height: 130)
         default:
-            return CGSize(width: UIScreen.main.bounds.width - 31, height: 90)
+            return CGSize(width: UIScreen.main.bounds.width - 33, height: 90)
         }
     }
     
@@ -162,9 +162,9 @@ extension HabitsViewController: UICollectionViewDelegateFlowLayout {
             print("section \(indexPath.section), item \(indexPath.item)")
         case 1:
             print("section \(indexPath.section), item \(indexPath.item)")
-            if let vc = storyboard?.instantiateViewController(withIdentifier: "HabitDetailsViewController") {
-                print("ok")
+            if let vc = storyboard?.instantiateViewController(withIdentifier: "HabitDetailsViewController") as? HabitDetailsViewController {
                 vc.title = "\(HabitsStore.shared.habits[indexPath.item].name)"
+                vc.habit = HabitsStore.shared.habits[indexPath.item]
                 navigationController?.pushViewController(vc, animated: true)
             }
         default:

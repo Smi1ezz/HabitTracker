@@ -16,8 +16,7 @@ class InfoViewController: UIViewController {
     let titleLabel: UILabel = {
         let title = UILabel()
         title.text = "Привычка за 21 день"
-        title.tintColor = .black
-        title.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+        title.titleStyle()
         return title
     }()
     
@@ -25,27 +24,23 @@ class InfoViewController: UIViewController {
         let info = UILabel()
         info.text =
 """
-     Прохождение этапов, за которые за 21 день вырабатывается привычка, подчиняется следующему алгоритму:
+Прохождение этапов, за которые за 21 день вырабатывается привычка, подчиняется следующему алгоритму:
 
-     1. Провести 1 день без обращения
-     к старым привычкам, стараться вести себя так, как будто цель, загаданная
-     в перспективу, находится на расстоянии шага.
+1. Провести 1 день без обращения к старым привычкам, стараться вести себя так, как будто цель, загаданная в перспективу, находится на расстоянии шага.
 
-     2. Выдержать 2 дня в прежнем состоянии самоконтроля.
+2. Выдержать 2 дня в прежнем состоянии самоконтроля.
 
-     3. Отметить в дневнике первую неделю изменений и подвести первые итоги — что оказалось тяжело, что — легче,
-     с чем еще предстоит серьезно бороться.
+3. Отметить в дневнике первую неделю изменений и подвести первые итоги — что оказалось тяжело, что — легче, с чем еще предстоит серьезно бороться.
 
-     4. Поздравить себя с прохождением первого серьезного порога в 21 день.
-     За это время отказ от дурных наклонностей уже примет форму осознанного преодоления и человек сможет больше работать в сторону принятия положительных качеств.
+4. Поздравить себя с прохождением первого серьезного порога в 21 день. За это время отказ от дурных наклонностей уже примет форму осознанного преодоления и человек сможет больше работать в сторону принятия положительных качеств.
 
-     5. Держать планку 40 дней. Практикующий методику уже чувствует себя освободившимся от прошлого негатива и двигается в нужном направлении с хорошей динамикой.
+5. Держать планку 40 дней. Практикующий методику уже чувствует себя освободившимся от прошлого негатива и двигается в нужном направлении с хорошей динамикой.
 
-     6. На 90-й день соблюдения техники все лишнее из «прошлой жизни» перестает напоминать о себе, и человек, оглянувшись назад, осознает себя полностью обновившимся.
+6. На 90-й день соблюдения техники все лишнее из «прошлой жизни» перестает напоминать о себе, и человек, оглянувшись назад, осознает себя полностью обновившимся.
 """
-        info.tintColor = .black
-        info.backgroundColor = .white
-        info.font = UIFont.systemFont(ofSize: 17, weight: .regular)
+        info.bodyStyle()
+        info.textAlignment = .left
+        
         info.numberOfLines = 0
         return info
     }()
@@ -53,7 +48,6 @@ class InfoViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .yellow
         navigationItem.title = "Информация"
         setupScrollView()
         setupConstaraints()
@@ -62,10 +56,9 @@ class InfoViewController: UIViewController {
     func setupScrollView() {
         view.addSubview(scroll)
         scroll.addSubview(container)
-        scroll.backgroundColor = .red
+        scroll.showsVerticalScrollIndicator = false
         container.addSubview(titleLabel)
         container.addSubview(infoText)
-        container.backgroundColor = .lightGray
     }
     
     func setupConstaraints() {
@@ -87,11 +80,11 @@ class InfoViewController: UIViewController {
             
             titleLabel.topAnchor.constraint(equalTo: container.topAnchor, constant: 22),
             titleLabel.leadingAnchor.constraint(equalTo: container.leadingAnchor, constant: 16),
-            titleLabel.trailingAnchor.constraint(equalTo: container.leadingAnchor, constant: -16),
+            titleLabel.trailingAnchor.constraint(equalTo: container.trailingAnchor, constant: -16),
             
             infoText.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 16),
             infoText.leadingAnchor.constraint(equalTo: container.leadingAnchor, constant: 16),
-            infoText.trailingAnchor.constraint(equalTo: container.leadingAnchor, constant: -16),
+            infoText.trailingAnchor.constraint(equalTo: container.trailingAnchor, constant: -16),
             infoText.bottomAnchor.constraint(equalTo: container.bottomAnchor, constant: -22)
         ])
     }

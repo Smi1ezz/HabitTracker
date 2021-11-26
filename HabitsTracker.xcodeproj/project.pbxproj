@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		8401DADD27298BCA0022B7FA /* CreateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8401DADC27298BCA0022B7FA /* CreateViewController.swift */; };
+		8401DADD27298BCA0022B7FA /* HabitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8401DADC27298BCA0022B7FA /* HabitViewController.swift */; };
 		8401DAE5272AAFDD0022B7FA /* HabitDetailsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8401DAE4272AAFDD0022B7FA /* HabitDetailsTableViewCell.swift */; };
 		8401DAE7272AAFF70022B7FA /* HabitDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8401DAE6272AAFF70022B7FA /* HabitDetailsViewController.swift */; };
 		8401DAE9272ADB440022B7FA /* NameTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8401DAE8272ADB440022B7FA /* NameTableViewCell.swift */; };
@@ -19,6 +19,8 @@
 		8401DAFC273954560022B7FA /* NameEditTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8401DAFB273954560022B7FA /* NameEditTableViewCell.swift */; };
 		8401DAFE273954740022B7FA /* ColorEditTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8401DAFD273954740022B7FA /* ColorEditTableViewCell.swift */; };
 		8401DB00273954850022B7FA /* DateEditTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8401DAFF273954850022B7FA /* DateEditTableViewCell.swift */; };
+		8401DB03273BBE860022B7FA /* AppFontsUILabelExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8401DB02273BBE850022B7FA /* AppFontsUILabelExtension.swift */; };
+		8401DB44274CECE20022B7FA /* HideKeyboardExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8401DB43274CECE10022B7FA /* HideKeyboardExtension.swift */; };
 		84BE1FFF27281E22002A1B69 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BE1FFE27281E22002A1B69 /* AppDelegate.swift */; };
 		84BE200127281E22002A1B69 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BE200027281E22002A1B69 /* SceneDelegate.swift */; };
 		84BE200627281E22002A1B69 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84BE200427281E22002A1B69 /* Main.storyboard */; };
@@ -54,7 +56,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		8401DADC27298BCA0022B7FA /* CreateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateViewController.swift; sourceTree = "<group>"; };
+		8401DADC27298BCA0022B7FA /* HabitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitViewController.swift; sourceTree = "<group>"; };
 		8401DAE4272AAFDD0022B7FA /* HabitDetailsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitDetailsTableViewCell.swift; sourceTree = "<group>"; };
 		8401DAE6272AAFF70022B7FA /* HabitDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitDetailsViewController.swift; sourceTree = "<group>"; };
 		8401DAE8272ADB440022B7FA /* NameTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameTableViewCell.swift; sourceTree = "<group>"; };
@@ -66,6 +68,8 @@
 		8401DAFB273954560022B7FA /* NameEditTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameEditTableViewCell.swift; sourceTree = "<group>"; };
 		8401DAFD273954740022B7FA /* ColorEditTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorEditTableViewCell.swift; sourceTree = "<group>"; };
 		8401DAFF273954850022B7FA /* DateEditTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateEditTableViewCell.swift; sourceTree = "<group>"; };
+		8401DB02273BBE850022B7FA /* AppFontsUILabelExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFontsUILabelExtension.swift; sourceTree = "<group>"; };
+		8401DB43274CECE10022B7FA /* HideKeyboardExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HideKeyboardExtension.swift; sourceTree = "<group>"; };
 		84BE1FFB27281E21002A1B69 /* HabitsTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HabitsTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84BE1FFE27281E22002A1B69 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		84BE200027281E22002A1B69 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -80,7 +84,7 @@
 		84BE202127281E23002A1B69 /* HabitsTrackerUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitsTrackerUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		84BE202E27282789002A1B69 /* HabitsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitsStore.swift; sourceTree = "<group>"; };
 		84BE203127283AD6002A1B69 /* HabitsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitsViewController.swift; sourceTree = "<group>"; };
-		84BE203327283AEC002A1B69 /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
+		84BE203327283AEC002A1B69 /* InfoViewController.swift */ = {isa = PBXFileReference; indentWidth = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = InfoViewController.swift; sourceTree = "<group>"; tabWidth = 4; usesTabs = 0; wrapsLines = 1; };
 		84BE203727284154002A1B69 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		84BE20392728468A002A1B69 /* AppColours.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppColours.swift; sourceTree = "<group>"; };
 		84BE203E27293C9B002A1B69 /* ProgressCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -115,7 +119,7 @@
 		8401DADB27298BA10022B7FA /* CreateHabitScreen */ = {
 			isa = PBXGroup;
 			children = (
-				8401DADC27298BCA0022B7FA /* CreateViewController.swift */,
+				8401DADC27298BCA0022B7FA /* HabitViewController.swift */,
 				8401DAE8272ADB440022B7FA /* NameTableViewCell.swift */,
 				8401DAEA272ADEEC0022B7FA /* ColorTableViewCell.swift */,
 				8401DAEC272ADEF90022B7FA /* DateTableViewCell.swift */,
@@ -159,6 +163,30 @@
 			path = EditHabitScreen;
 			sourceTree = "<group>";
 		};
+		8401DB01273BBE5E0022B7FA /* AppFonts */ = {
+			isa = PBXGroup;
+			children = (
+				8401DB02273BBE850022B7FA /* AppFontsUILabelExtension.swift */,
+			);
+			path = AppFonts;
+			sourceTree = "<group>";
+		};
+		8401DB04273BC5E40022B7FA /* TabBarController */ = {
+			isa = PBXGroup;
+			children = (
+				84BE203727284154002A1B69 /* TabBarController.swift */,
+			);
+			path = TabBarController;
+			sourceTree = "<group>";
+		};
+		8401DB45274CED070022B7FA /* HideKeyboardExtencion */ = {
+			isa = PBXGroup;
+			children = (
+				8401DB43274CECE10022B7FA /* HideKeyboardExtension.swift */,
+			);
+			path = HideKeyboardExtencion;
+			sourceTree = "<group>";
+		};
 		84BE1FF227281E21002A1B69 = {
 			isa = PBXGroup;
 			children = (
@@ -183,16 +211,18 @@
 			isa = PBXGroup;
 			children = (
 				8401DAF227300EAF0022B7FA /* ActionCellProtocol */,
-				8401DAE3272AAFAD0022B7FA /* DetailsScreen */,
-				8401DADB27298BA10022B7FA /* CreateHabitScreen */,
-				8401DAF8273953270022B7FA /* EditHabitScreen */,
+				8401DB01273BBE5E0022B7FA /* AppFonts */,
+				84BE203B27284780002A1B69 /* AppColours */,
 				84BE20302728279C002A1B69 /* HabitsStore */,
 				84BE203527283B44002A1B69 /* MainScreen */,
+				8401DADB27298BA10022B7FA /* CreateHabitScreen */,
+				8401DAE3272AAFAD0022B7FA /* DetailsScreen */,
+				8401DAF8273953270022B7FA /* EditHabitScreen */,
 				84BE203627283B58002A1B69 /* InfoScreen */,
-				84BE203B27284780002A1B69 /* AppColours */,
 				8401DAF327300ECD0022B7FA /* StringExtensionToChangeColor */,
+				8401DB45274CED070022B7FA /* HideKeyboardExtencion */,
+				8401DB04273BC5E40022B7FA /* TabBarController */,
 				84BE1FFE27281E22002A1B69 /* AppDelegate.swift */,
-				84BE203727284154002A1B69 /* TabBarController.swift */,
 				84BE200027281E22002A1B69 /* SceneDelegate.swift */,
 				84BE200427281E22002A1B69 /* Main.storyboard */,
 				84BE200727281E23002A1B69 /* Assets.xcassets */,
@@ -385,10 +415,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				8401DAF527300F2D0022B7FA /* ActionCellProtocol.swift in Sources */,
+				8401DB44274CECE20022B7FA /* HideKeyboardExtension.swift in Sources */,
 				8401DAED272ADEF90022B7FA /* DateTableViewCell.swift in Sources */,
-				8401DADD27298BCA0022B7FA /* CreateViewController.swift in Sources */,
+				8401DADD27298BCA0022B7FA /* HabitViewController.swift in Sources */,
 				84BE202F27282789002A1B69 /* HabitsStore.swift in Sources */,
 				8401DAFA2739538C0022B7FA /* EditViewController.swift in Sources */,
+				8401DB03273BBE860022B7FA /* AppFontsUILabelExtension.swift in Sources */,
 				8401DAE9272ADB440022B7FA /* NameTableViewCell.swift in Sources */,
 				84BE1FFF27281E22002A1B69 /* AppDelegate.swift in Sources */,
 				84BE204127293CA7002A1B69 /* HabitCollectionViewCell.swift in Sources */,

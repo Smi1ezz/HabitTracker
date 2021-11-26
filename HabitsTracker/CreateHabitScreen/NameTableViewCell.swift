@@ -9,9 +9,12 @@ import UIKit
 
 class NameTableViewCell: UITableViewCell {
     
-    private let nameTextField: UITextField = {
+    var delegate: HabitViewController!
+    
+    let nameTextField: UITextField = {
         let name = UITextField()
         name.placeholder = "К чему будем привыкать?"
+   
         return name
     }()
     
@@ -20,6 +23,7 @@ class NameTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupNameCell()
+        nameTextField.delegate = self
     }
     
     required init?(coder: NSCoder) {
@@ -30,15 +34,9 @@ class NameTableViewCell: UITableViewCell {
         super.awakeFromNib()
        
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-        name = self.nameTextField.text
-    }
     
     func setupNameCell() {
         contentView.addSubview(nameTextField)
-        contentView.backgroundColor = .cyan
         setupNameCellConstraints()
     }
     
@@ -50,4 +48,18 @@ class NameTableViewCell: UITableViewCell {
         ])
     }
 
+}
+
+extension NameTableViewCell: UITextFieldDelegate {
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        delegate.habit.name = textField.text ?? "name from EditVC Return"
+        nameTextField.resignFirstResponder()
+        return true
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        delegate.habit.name = textField.text ?? "name from EditVC didEnd"
+        nameTextField.resignFirstResponder()
+    }
 }

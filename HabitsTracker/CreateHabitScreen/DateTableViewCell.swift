@@ -9,6 +9,8 @@ import UIKit
 
 class DateTableViewCell: UITableViewCell {
     
+    var delegate: HabitViewController!
+    
     let dateTextField: UILabel = {
        let date = UILabel()
         date.text = "В какое время выполняем?"
@@ -39,8 +41,10 @@ class DateTableViewCell: UITableViewCell {
         let changedTimeString = formatter.string(from: datePicker.date)
         let textToTextField = "Каждый день в " + changedTimeString
         
-        dateTextField.attributedText = textToTextField.attributedStringWithColor([changedTimeString], color: UIColor.appColour(name: .purple))
+        dateTextField.attributedText = textToTextField.attributedStringWithColor([changedTimeString], color: UIColor.appColour(name: .indigo))
         
+//        delegate.habit.date = formatter.date(from: changedTimeString) ?? Date()
+        delegate.habit.date = datePicker.date
     }
     
     func setupDateTVCell() {

@@ -9,6 +9,8 @@ import UIKit
 
 class ColorTableViewCell: UITableViewCell {
     
+    var delegate: HabitViewController!
+    
     let colorPickerButton: UIButton = {
         let colorPickerButton = UIButton()
         colorPickerButton.layer.cornerRadius = 15
@@ -61,19 +63,16 @@ class ColorTableViewCell: UITableViewCell {
         colorPickerVC.selectedColor = colorPickerButton.backgroundColor ?? .orange
         colorPickerVC.title = "Выбери цвет"
         
-//        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//        if let newViewController = storyboard.instantiateViewController(withIdentifier: "CreateViewController") as? CreateViewController {
-//            newViewController.present(colorPickerVC, animated: true)
-//        }
-        UIApplication.shared.keyWindow?.rootViewController?.present(colorPickerVC, animated: true)
-
+        delegate.present(colorPickerVC, animated: true)
     }
 }
 
 //MARK: UIColorPicker delegte
 extension ColorTableViewCell: UIColorPickerViewControllerDelegate {
+        
     func colorPickerViewControllerDidSelectColor(_ viewController: UIColorPickerViewController) {
         colorPickerButton.backgroundColor = viewController.selectedColor
+        delegate.habit.color = viewController.selectedColor
     }
 }
 

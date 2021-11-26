@@ -34,7 +34,6 @@ class HabitDetailsTableViewCell: UITableViewCell {
     
     func setupDetailsCell() {
         contentView.addSubview(dateLabel)
-        contentView.backgroundColor = .brown
         setupDetailsCellConstraints()
     }
     

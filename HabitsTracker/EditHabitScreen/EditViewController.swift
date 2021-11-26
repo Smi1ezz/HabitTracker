@@ -9,9 +9,16 @@ import UIKit
 
 class EditViewController: UIViewController {
     
+    lazy var habit = Habit(name: "second", date: Date(), trackDates: [], color: .green)
+    
     let editTableView: UITableView = {
         let table = UITableView(frame: .zero, style: .grouped)
         return table
+    }()
+    
+    lazy var saveBarButton: UIBarButtonItem = {
+        let save = UIBarButtonItem(title: "Сохранить", style: .done, target: self, action: #selector(saveButtonAction))
+        return save
     }()
     
     private let nameTVCellID = "NameTableViewCell"
@@ -21,8 +28,11 @@ class EditViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(editTableView)
+        navigationItem.largeTitleDisplayMode = .never
         setupTableView()
         setupConstraints()
+        setupNaviBar()
+        self.hideKeyboard()
     }
     
     private func setupTableView() {
@@ -41,6 +51,30 @@ class EditViewController: UIViewController {
             editTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             editTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
+    }
+    
+    private func setupNaviBar() {
+        navigationItem.rightBarButtonItem = saveBarButton
+    }
+    
+    @objc func saveButtonAction() {
+        //не работает!
+        
+        let newHabit = Habit(name: habit.name,
+                             date: habit.date,
+                             color: habit.color)
+        
+        let store = HabitsStore.shared
+        
+        store.habits.append(newHabit)
+        
+        for (index, value) in store.habits.enumerated() {
+            print("index \(index) value \(value.name), \(value.color), \(value.date)")
+        }
+        
+        //        if let vc = storyboard?.instantiateViewController(withIdentifier: "EditViewController") {
+        print("СОХРАНИЛИ ПРИВЫЧКУ И ОБРАТНО НА DETAILS")
+        navigationController?.popViewController(animated: true)
     }
 }
 
@@ -72,13 +106,15 @@ extension EditViewController: UITableViewDataSource {
         case 0:
             let cell = tableView.dequeueReusableCell(withIdentifier: nameTVCellID, for: indexPath) as! NameEditTableViewCell
             cell.name = "название привычки"
+            cell.delegate = self
             return cell
         case 1:
             let cell = tableView.dequeueReusableCell(withIdentifier: colorTVCellID, for: indexPath) as! ColorEditTableViewCell
-            cell.colorPickerButton.backgroundColor = .black
+            cell.delegate = self
             return cell
         case 2:
             let cell = tableView.dequeueReusableCell(withIdentifier: dateTVCellID, for: indexPath) as! DateEditTableViewCell
+            cell.delegate = self
             
             return cell
         default:
@@ -91,3 +127,5 @@ extension EditViewController: UITableViewDataSource {
 extension EditViewController: UITableViewDelegate {
     
 }
+
+

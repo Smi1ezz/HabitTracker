@@ -7,14 +7,14 @@
 
 import UIKit
 
-class CreateViewController: UIViewController {
+class HabitViewController: UIViewController {
     
     lazy var habit = Habit(name: "first", date: Date(), color: .black)
     
     let createTableView = UITableView(frame: .zero, style: .grouped)
     
     lazy var saveBarButton: UIBarButtonItem = {
-        let save = UIBarButtonItem(title: "Сохранить", style: .plain, target: self, action: #selector(saveButtonAction))
+        let save = UIBarButtonItem(title: "Сохранить", style: .done, target: self, action: #selector(saveButtonAction))
         
         return save
     }()
@@ -30,6 +30,7 @@ class CreateViewController: UIViewController {
         setupTableView()
         setupTableViewConstraints()
         setupNavBar()
+        self.hideKeyboard()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -53,7 +54,6 @@ class CreateViewController: UIViewController {
         createTableView.register(DateTableViewCell.self, forCellReuseIdentifier: dateTTVCellID)
         createTableView.dataSource = self
         createTableView.delegate = self
-        createTableView.backgroundColor = .cyan
 
     }
     
@@ -85,25 +85,28 @@ class CreateViewController: UIViewController {
     }
     
     @objc func saveButtonAction() {
+        if habit.name != "first" && habit.color != .black && habit.date != Date() {
+            let newHabit = Habit(name: habit.name,
+                                 date: habit.date,
+                                 color: habit.color)
+            
+            let store = HabitsStore.shared
+            
+            store.habits.append(newHabit)
+            
+            print("СОХРАНИЛИ ПРИВЫЧКУ И ОБРАТНО НА ГЛАВНЫЙ")
+            navigationController?.popViewController(animated: true)
+            
+        }
         
-        //не работает!
         
-        let newHabit = Habit(name: habit.name,
-                             date: habit.date,
-                             color: habit.color)
-        
-        let store = HabitsStore.shared
-        
-        store.habits.append(newHabit)
-        
-            for (index, value) in store.habits.enumerated() {
-                print("index \(index) value \(value.name), \(value.color), \(value.date)")
-            }
+
     }
+    
 }
 
 //MARK: datasourse
-extension CreateViewController: UITableViewDataSource {
+extension HabitViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch section {
         case 0:
@@ -129,16 +132,19 @@ extension CreateViewController: UITableViewDataSource {
         switch indexPath.section {
         case 0:
             let cell = tableView.dequeueReusableCell(withIdentifier: nameTVCellID) as! NameTableViewCell
-            cell.backgroundColor = .orange
-            habit.name = cell.name ?? habit.name
+            cell.delegate = self
+            
             return cell
         case 1:
             let cell = tableView.dequeueReusableCell(withIdentifier: colorTVCellID) as! ColorTableViewCell
-            habit.color = cell.colorPickerButton.backgroundColor ?? habit.color
+            cell.delegate = self
+            
             return cell
         case 2:
             let cell = tableView.dequeueReusableCell(withIdentifier: dateTTVCellID) as! DateTableViewCell
-            habit.date = cell.datePicker.date
+            cell.delegate = self
+                habit.date = cell.datePicker.date
+            
             return cell
         default:
             return UITableViewCell()
@@ -147,8 +153,9 @@ extension CreateViewController: UITableViewDataSource {
 }
 
 //MARK: delegate
-extension CreateViewController: UITableViewDelegate {
+extension HabitViewController: UITableViewDelegate {
     
 }
+
 
 

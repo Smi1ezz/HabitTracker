@@ -12,9 +12,10 @@ class HabitDetailsViewController: UIViewController {
     let detailTableView = UITableView(frame: .zero, style: .grouped)
     let detailTVCellID = "detailTVCell"
     
+    var habit: Habit!
+    
     lazy var editBarButton: UIBarButtonItem = {
-        let edit = UIBarButtonItem(title: "Править", style: .plain, target: self, action: #selector(editButtonAction))
-        edit.tintColor = UIColor.appColour(name: .purple)
+        let edit = UIBarButtonItem(title: "Править", style: .done, target: self, action: #selector(editButtonAction))
         return edit
     }()
 
@@ -67,16 +68,28 @@ extension HabitDetailsViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: detailTVCellID) as! HabitDetailsTableViewCell
+        
+        cell.tintColor = .appColour(name: .purple)
          
         let dateFormatter = DateFormatter()
-        
         dateFormatter.dateFormat = "dd.MM.yy"
-        cell.dateLabel.text = dateFormatter.string(from: HabitsStore.shared.dates[indexPath.row])
+        let currentDate = HabitsStore.shared.dates[indexPath.row]
+        cell.dateLabel.text = dateFormatter.string(from: currentDate)
+        
+        if HabitsStore.shared.habit(habit, isTrackedIn: currentDate) {
+            cell.accessoryType = .checkmark
+        }
+        
         return cell
     }
 }
 
 //MARK: delegate
 extension HabitDetailsViewController: UITableViewDelegate {
-    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 44
+    }
 }
+
+
+
