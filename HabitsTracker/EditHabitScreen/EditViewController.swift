@@ -9,7 +9,11 @@ import UIKit
 
 class EditViewController: UIViewController {
     
-    lazy var habit = Habit(name: "second", date: Date(), trackDates: [], color: .green)
+    var delegate: HabitDetailsViewController!
+    
+    lazy var delegateHabit = delegate.habit
+    
+    lazy var habit = Habit(name: delegateHabit?.name ?? "default", date: delegateHabit?.date ?? Date(), trackDates: delegateHabit?.trackDates ?? [], color: delegateHabit?.color ?? .black)
     
     let editTableView: UITableView = {
         let table = UITableView(frame: .zero, style: .grouped)
@@ -19,6 +23,11 @@ class EditViewController: UIViewController {
     lazy var saveBarButton: UIBarButtonItem = {
         let save = UIBarButtonItem(title: "Сохранить", style: .done, target: self, action: #selector(saveButtonAction))
         return save
+    }()
+    
+    lazy var cancelBarButton: UIBarButtonItem = {
+        let cancel = UIBarButtonItem(title: "Отменить", style: .plain, target: self, action: #selector(cancelButtonAction))
+       return cancel
     }()
     
     private let nameTVCellID = "NameTableViewCell"
@@ -55,26 +64,22 @@ class EditViewController: UIViewController {
     
     private func setupNaviBar() {
         navigationItem.rightBarButtonItem = saveBarButton
+        navigationItem.leftBarButtonItem = cancelBarButton
     }
     
     @objc func saveButtonAction() {
-        //не работает!
         
-        let newHabit = Habit(name: habit.name,
-                             date: habit.date,
-                             color: habit.color)
+        delegate.habit.name = habit.name
+        delegate.habit.color = habit.color
+        delegate.habit.date = habit.date
+        delegate.detailTableView.reloadData()
+        HabitsStore.shared.save()
+        delegate.navigationController?.popToRootViewController(animated: true)
         
-        let store = HabitsStore.shared
-        
-        store.habits.append(newHabit)
-        
-        for (index, value) in store.habits.enumerated() {
-            print("index \(index) value \(value.name), \(value.color), \(value.date)")
-        }
-        
-        //        if let vc = storyboard?.instantiateViewController(withIdentifier: "EditViewController") {
-        print("СОХРАНИЛИ ПРИВЫЧКУ И ОБРАТНО НА DETAILS")
-        navigationController?.popViewController(animated: true)
+    }
+    
+    @objc func cancelButtonAction() {
+        delegate.navigationController?.popToRootViewController(animated: true)
     }
 }
 
@@ -105,22 +110,26 @@ extension EditViewController: UITableViewDataSource {
         switch indexPath.section {
         case 0:
             let cell = tableView.dequeueReusableCell(withIdentifier: nameTVCellID, for: indexPath) as! NameEditTableViewCell
-            cell.name = "название привычки"
+            cell.nameTextField.text = habit.name
             cell.delegate = self
             return cell
         case 1:
             let cell = tableView.dequeueReusableCell(withIdentifier: colorTVCellID, for: indexPath) as! ColorEditTableViewCell
+            cell.colorPickerButton.backgroundColor = habit.color
             cell.delegate = self
             return cell
         case 2:
             let cell = tableView.dequeueReusableCell(withIdentifier: dateTVCellID, for: indexPath) as! DateEditTableViewCell
             cell.delegate = self
+            cell.datePicker.date = habit.date
+            cell.changeDate()
             
             return cell
         default:
             return UITableViewCell()
         }
     }
+
 }
 
 //MARK: delegate

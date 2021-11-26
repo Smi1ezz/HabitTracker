@@ -30,8 +30,9 @@ class HabitDetailsViewController: UIViewController {
     
     @objc func editButtonAction() {
         print("edit")
-        if let vc = storyboard?.instantiateViewController(withIdentifier: "EditViewController") {
+        if let vc = storyboard?.instantiateViewController(withIdentifier: "EditViewController") as? EditViewController {
             print("edit ok")
+            vc.delegate = self
             navigationController?.pushViewController(vc, animated: true)
         }
     }
@@ -70,12 +71,19 @@ extension HabitDetailsViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: detailTVCellID) as! HabitDetailsTableViewCell
         
         cell.tintColor = .appColour(name: .purple)
+        let currentDate = HabitsStore.shared.dates.reversed()[indexPath.row]
+
+        if indexPath.row == 0 {
+            cell.dateLabel.text = "Сегодня"
+        } else if indexPath.row == 1 {
+            cell.dateLabel.text = "Вчера"
+        } else {
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "dd.MM.yy"
+    //        let currentDate = HabitsStore.shared.dates[indexPath.row]
+            cell.dateLabel.text = dateFormatter.string(from: currentDate)
+        }
          
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd.MM.yy"
-        let currentDate = HabitsStore.shared.dates[indexPath.row]
-        cell.dateLabel.text = dateFormatter.string(from: currentDate)
-        
         if HabitsStore.shared.habit(habit, isTrackedIn: currentDate) {
             cell.accessoryType = .checkmark
         }

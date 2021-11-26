@@ -17,9 +17,7 @@ class NameTableViewCell: UITableViewCell {
    
         return name
     }()
-    
-    var name: String?
-    
+        
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupNameCell()
@@ -28,11 +26,6 @@ class NameTableViewCell: UITableViewCell {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-       
     }
     
     func setupNameCell() {
@@ -47,19 +40,18 @@ class NameTableViewCell: UITableViewCell {
             nameTextField.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 15)
         ])
     }
-
 }
 
 extension NameTableViewCell: UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        delegate.habit.name = textField.text ?? "name from EditVC Return"
+        delegate.habit.name = textField.text ?? "default"
         nameTextField.resignFirstResponder()
         return true
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        delegate.habit.name = textField.text ?? "name from EditVC didEnd"
+        delegate.habit.name = textField.text ?? "default"
         nameTextField.resignFirstResponder()
     }
 }

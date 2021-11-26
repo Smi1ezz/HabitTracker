@@ -9,10 +9,6 @@ import UIKit
 
 class HabitsViewController: UIViewController {
     
-    //MARK: УДАЛИТЬ - создание привычки для проверки кода
-    let a1 = Habit(name: "a1", date: NSDate.now, trackDates: [NSDate.now], color: UIColor.appColour(name: .indigo))
-    
-    
     let habitsCollectionView: UICollectionView = {
         let flowLayout = UICollectionViewFlowLayout()
         let habitsCollectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
@@ -23,6 +19,11 @@ class HabitsViewController: UIViewController {
     lazy var createBarButton: UIBarButtonItem = {
         let create = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(createButtonAction))
         return create
+    }()
+    
+    lazy var reloadBarButton: UIBarButtonItem = {
+        let reload = UIBarButtonItem(title: "Стереть все", style: .plain, target: self, action: #selector(reloadButtonAction))
+        return reload
     }()
     
     let progressCellID = "progressCell"
@@ -38,10 +39,8 @@ class HabitsViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        //MARK: УДАЛИТЬ-стрка для обнуления массива привычек
-//        HabitsStore.shared.habits = []
         habitsCollectionView.reloadData()
-
+        
     }
     
     private func setupNavigationBar() {
@@ -57,6 +56,8 @@ class HabitsViewController: UIViewController {
         navigationItem.largeTitleDisplayMode = .always
         navigationItem.title = "Сегодня:"
         navigationItem.rightBarButtonItem = createBarButton
+        navigationItem.leftBarButtonItem = reloadBarButton
+        
     }
     
     private func setupHabitsCollectionView() {
@@ -82,6 +83,12 @@ class HabitsViewController: UIViewController {
             print("ok")
             navigationController?.pushViewController(vc, animated: true)
         }
+    }
+    
+    @objc func reloadButtonAction() {
+        //MARK: УДАЛИТЬ-функция кнопки для обнуления массива привычек
+        HabitsStore.shared.habits = []
+        habitsCollectionView.reloadData()
     }
     //end
 }

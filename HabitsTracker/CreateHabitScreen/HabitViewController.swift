@@ -9,7 +9,7 @@ import UIKit
 
 class HabitViewController: UIViewController {
     
-    lazy var habit = Habit(name: "first", date: Date(), color: .black)
+    lazy var habit = Habit(name: "default", date: Date(), color: .orange)
     
     let createTableView = UITableView(frame: .zero, style: .grouped)
     
@@ -17,6 +17,11 @@ class HabitViewController: UIViewController {
         let save = UIBarButtonItem(title: "Сохранить", style: .done, target: self, action: #selector(saveButtonAction))
         
         return save
+    }()
+    
+    lazy var cancelBarButton: UIBarButtonItem = {
+        let cancel = UIBarButtonItem(title: "Отменить", style: .plain, target: self, action: #selector(cancelButtonAction))
+       return cancel
     }()
     
     private let nameTVCellID = "nameTVCellID"
@@ -68,7 +73,8 @@ class HabitViewController: UIViewController {
     
     private func setupNavBar() {
         navigationItem.rightBarButtonItem = saveBarButton
-        
+        navigationItem.leftBarButtonItem = cancelBarButton
+
     }
     
     @objc func keyboardWillShow(notification: NSNotification) {
@@ -85,7 +91,7 @@ class HabitViewController: UIViewController {
     }
     
     @objc func saveButtonAction() {
-        if habit.name != "first" && habit.color != .black && habit.date != Date() {
+        if habit.name != "default" && habit.name != "" && habit.color != .black && habit.date != Date() {
             let newHabit = Habit(name: habit.name,
                                  date: habit.date,
                                  color: habit.color)
@@ -94,13 +100,12 @@ class HabitViewController: UIViewController {
             
             store.habits.append(newHabit)
             
-            print("СОХРАНИЛИ ПРИВЫЧКУ И ОБРАТНО НА ГЛАВНЫЙ")
             navigationController?.popViewController(animated: true)
-            
         }
-        
-        
-
+    }
+    
+    @objc func cancelButtonAction() {
+        navigationController?.popViewController(animated: true)
     }
     
 }

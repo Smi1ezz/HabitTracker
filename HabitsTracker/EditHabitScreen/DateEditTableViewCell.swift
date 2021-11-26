@@ -42,7 +42,7 @@ class DateEditTableViewCell: UITableViewCell {
         let textToTextField = "Каждый день в " + changedTimeString
         
         dateTextField.attributedText = textToTextField.attributedStringWithColor([changedTimeString], color: UIColor.appColour(name: .indigo))
-        
+        delegate.habit.date = datePicker.date
        
     }
     

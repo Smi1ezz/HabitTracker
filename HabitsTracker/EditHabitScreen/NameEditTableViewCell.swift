@@ -18,7 +18,6 @@ class NameEditTableViewCell: UITableViewCell {
         return name
     }()
     
-    var name: String?
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -33,7 +32,6 @@ class NameEditTableViewCell: UITableViewCell {
     func setupNameCell() {
         nameTextField.delegate = self
         contentView.addSubview(nameTextField)
-        contentView.backgroundColor = .cyan
         setupNameCellConstraints()
     }
     

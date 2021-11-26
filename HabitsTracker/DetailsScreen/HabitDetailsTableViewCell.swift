@@ -9,14 +9,6 @@ import UIKit
 
 class HabitDetailsTableViewCell: UITableViewCell {
     
-//    var habit: Habit? {
-//        didSet {
-//            dateLabel.text = {
-//                if habit
-//            }()
-//        }
-//    }
-    
     let dateLabel: UILabel = {
         let dateLabel = UILabel()
         return dateLabel

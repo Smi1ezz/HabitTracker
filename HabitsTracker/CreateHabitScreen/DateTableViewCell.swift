@@ -43,7 +43,6 @@ class DateTableViewCell: UITableViewCell {
         
         dateTextField.attributedText = textToTextField.attributedStringWithColor([changedTimeString], color: UIColor.appColour(name: .indigo))
         
-//        delegate.habit.date = formatter.date(from: changedTimeString) ?? Date()
         delegate.habit.date = datePicker.date
     }
     
