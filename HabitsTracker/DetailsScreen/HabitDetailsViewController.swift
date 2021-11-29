@@ -13,6 +13,7 @@ class HabitDetailsViewController: UIViewController {
     let detailTVCellID = "detailTVCell"
     
     var habit: Habit!
+    var index: Int!
     
     lazy var editBarButton: UIBarButtonItem = {
         let edit = UIBarButtonItem(title: "Править", style: .done, target: self, action: #selector(editButtonAction))
@@ -25,16 +26,6 @@ class HabitDetailsViewController: UIViewController {
         navigationItem.rightBarButtonItem = editBarButton
         setupTableView()
         setupTableViewConstraints()
-
-    }
-    
-    @objc func editButtonAction() {
-        print("edit")
-        if let vc = storyboard?.instantiateViewController(withIdentifier: "EditViewController") as? EditViewController {
-            print("edit ok")
-            vc.delegate = self
-            navigationController?.pushViewController(vc, animated: true)
-        }
     }
     
     func setupTableView() {
@@ -51,6 +42,13 @@ class HabitDetailsViewController: UIViewController {
             detailTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             detailTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
+    }
+    
+    @objc func editButtonAction() {
+        if let vc = storyboard?.instantiateViewController(withIdentifier: "EditViewController") as? EditViewController {
+            vc.delegate = self
+            navigationController?.pushViewController(vc, animated: true)
+        }
     }
 
 }

@@ -22,6 +22,7 @@ class NameTableViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupNameCell()
         nameTextField.delegate = self
+        self.becomeFirstResponder()
     }
     
     required init?(coder: NSCoder) {
@@ -37,7 +38,8 @@ class NameTableViewCell: UITableViewCell {
         nameTextField.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             nameTextField.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            nameTextField.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 15)
+            nameTextField.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 15),
+            nameTextField.heightAnchor.constraint(equalToConstant: 44)
         ])
     }
 }

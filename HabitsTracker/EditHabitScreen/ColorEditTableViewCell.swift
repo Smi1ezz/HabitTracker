@@ -45,19 +45,8 @@ class ColorEditTableViewCell: UITableViewCell {
         ])
         
     }
-
-    override func awakeFromNib() {
-        super.awakeFromNib()
-
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-    }
     
     @objc func presentColorPickerVC() {
-        print("colorButtonPressed")
 
         let colorPickerVC = UIColorPickerViewController()
         colorPickerVC.delegate = self

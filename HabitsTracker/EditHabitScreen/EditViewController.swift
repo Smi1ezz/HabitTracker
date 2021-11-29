@@ -12,12 +12,21 @@ class EditViewController: UIViewController {
     var delegate: HabitDetailsViewController!
     
     lazy var delegateHabit = delegate.habit
-    
+        
     lazy var habit = Habit(name: delegateHabit?.name ?? "default", date: delegateHabit?.date ?? Date(), trackDates: delegateHabit?.trackDates ?? [], color: delegateHabit?.color ?? .black)
     
     let editTableView: UITableView = {
         let table = UITableView(frame: .zero, style: .grouped)
         return table
+    }()
+    
+    let warningButton: UIButton = {
+        let warning = UIButton(type: .system)
+        warning.setTitle("Удалить привычку", for: .normal)
+        warning.tintColor = .systemRed
+        warning.addTarget(self, action: #selector(warningButtonAction), for: .touchUpInside)
+        warning.translatesAutoresizingMaskIntoConstraints = false
+        return warning
     }()
     
     lazy var saveBarButton: UIBarButtonItem = {
@@ -36,7 +45,9 @@ class EditViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .white
         view.addSubview(editTableView)
+        view.addSubview(warningButton)
         navigationItem.largeTitleDisplayMode = .never
         setupTableView()
         setupConstraints()
@@ -45,6 +56,8 @@ class EditViewController: UIViewController {
     }
     
     private func setupTableView() {
+        editTableView.separatorColor = .white
+        editTableView.backgroundColor = .white
         editTableView.translatesAutoresizingMaskIntoConstraints = false
         editTableView.dataSource = self
         editTableView.delegate = self
@@ -58,7 +71,11 @@ class EditViewController: UIViewController {
             editTableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             editTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             editTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            editTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+            editTableView.bottomAnchor.constraint(equalTo: warningButton.topAnchor),
+            warningButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -18),
+            warningButton.leadingAnchor.constraint(equalTo: editTableView.leadingAnchor),
+            warningButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
+            
         ])
     }
     
@@ -69,17 +86,43 @@ class EditViewController: UIViewController {
     
     @objc func saveButtonAction() {
         
-        delegate.habit.name = habit.name
-        delegate.habit.color = habit.color
-        delegate.habit.date = habit.date
-        delegate.detailTableView.reloadData()
-        HabitsStore.shared.save()
-        delegate.navigationController?.popToRootViewController(animated: true)
+        if delegate.habit.name != habit.name || delegate.habit.color != habit.color || delegate.habit.date != habit.date {
+            
+            delegate.habit.name = habit.name
+            delegate.habit.color = habit.color
+            delegate.habit.date = habit.date
+            delegate.detailTableView.reloadData()
+            HabitsStore.shared.save()
+            delegate.navigationController?.popToRootViewController(animated: true)
+        }
         
     }
     
     @objc func cancelButtonAction() {
         delegate.navigationController?.popToRootViewController(animated: true)
+    }
+    
+    @objc func warningButtonAction() {
+        let massage = """
+Вы хотите удалить привычку "\(habit.name)"?
+"""
+        let vc = UIAlertController(title: "Удалить привычку"
+, message: massage, preferredStyle: .alert)
+        
+        let cancelAction = UIAlertAction(title: "Отмена", style: .cancel) { _ in
+            print("Отмена")
+        }
+        
+        let deleteAction = UIAlertAction(title: "Удалить", style: .destructive) { _ in
+            HabitsStore.shared.habits.remove(at: self.delegate.index)
+            self.delegate.navigationController?.popToRootViewController(animated: true)
+            print("Удалить")
+        }
+        
+        vc.addAction(cancelAction)
+        vc.addAction(deleteAction)
+        
+        present(vc, animated: true, completion: nil)
     }
 }
 
@@ -134,7 +177,7 @@ extension EditViewController: UITableViewDataSource {
 
 //MARK: delegate
 extension EditViewController: UITableViewDelegate {
-    
+
 }
 
 

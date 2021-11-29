@@ -35,17 +35,6 @@ class DateTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    @objc func changeDate() {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "hh:mm a"
-        let changedTimeString = formatter.string(from: datePicker.date)
-        let textToTextField = "Каждый день в " + changedTimeString
-        
-        dateTextField.attributedText = textToTextField.attributedStringWithColor([changedTimeString], color: UIColor.appColour(name: .indigo))
-        
-        delegate.habit.date = datePicker.date
-    }
-    
     func setupDateTVCell() {
         contentView.addSubview(dateTextField)
         contentView.addSubview(datePicker)
@@ -67,13 +56,16 @@ class DateTableViewCell: UITableViewCell {
             datePicker.bottomAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.bottomAnchor, constant: -15)
         ])
     }
-
-    override func awakeFromNib() {
-        super.awakeFromNib()
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
+    
+    @objc func changeDate() {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "hh:mm a"
+        let changedTimeString = formatter.string(from: datePicker.date)
+        let textToTextField = "Каждый день в " + changedTimeString
+        
+        dateTextField.attributedText = textToTextField.attributedStringWithColor([changedTimeString], color: UIColor.appColour(name: .indigo))
+        
+        delegate.habit.date = datePicker.date
     }
 
 }

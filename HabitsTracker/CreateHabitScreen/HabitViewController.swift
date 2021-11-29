@@ -32,6 +32,8 @@ class HabitViewController: UIViewController {
         super.viewDidLoad()
         title = "Создать"
         view.addSubview(createTableView)
+        createTableView.separatorColor = .white
+        createTableView.backgroundColor = .white
         setupTableView()
         setupTableViewConstraints()
         setupNavBar()

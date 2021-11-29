@@ -11,17 +11,14 @@ class ProgressCollectionViewCell: UICollectionViewCell {
     
     let motivationLabel: UILabel = {
         let motivation = UILabel()
-        motivation.text = {
-            return "Все получится"
-        }() //хочу сделать, чтобы мотивационный текст менялся или рандомно из нескольких фраз, или в зависимости от прогресса
+
         motivation.statusFootnoteStyle()
         return motivation
     }()
     
     let percentLabel: UILabel = {
         let percent = UILabel()
-        let progressInPersentsString = String(NSString(format: "%.0f", HabitsStore.shared.todayProgress*100)) + "%"
-        percent.text = progressInPersentsString
+
         percent.statusFootnoteStyle()
         return percent
     }()
@@ -43,7 +40,7 @@ class ProgressCollectionViewCell: UICollectionViewCell {
     }
     
     func setupProgressCell() {
-        reloadInputViews()
+//        reloadInputViews()
         contentView.backgroundColor = .white
         contentView.addSubview(motivationLabel)
         contentView.addSubview(percentLabel)
@@ -51,6 +48,31 @@ class ProgressCollectionViewCell: UICollectionViewCell {
         contentView.layer.cornerRadius = 8
         progressBar.layer.cornerRadius = 5
         setupConstraints()
+    }
+    
+    func reloadCell() {
+        motivationLabel.text = {
+            
+            switch HabitsStore.shared.todayProgress {
+            case 0:
+                return "Пора начинать!"
+            case 0..<0.4:
+                return "Хорошее начало"
+            case 0.5:
+                return "Ровно половина!"
+            case 0.5..<1:
+                return "Отлично, все получится"
+            case 1:
+                return "100% Молодец"
+            default:
+                return "Все получится"
+            }
+    
+        }()
+        
+        percentLabel.text = String(NSString(format: "%.0f", HabitsStore.shared.todayProgress*100)) + "%"
+        
+        progressBar.progress = HabitsStore.shared.todayProgress
     }
     
     func setupConstraints() {

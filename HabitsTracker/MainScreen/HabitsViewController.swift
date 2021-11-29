@@ -39,21 +39,21 @@ class HabitsViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        navigationController?.navigationBar.prefersLargeTitles = true
         habitsCollectionView.reloadData()
-        
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        navigationController?.navigationBar.prefersLargeTitles = false
     }
     
     private func setupNavigationBar() {
         //MARK: создание границы навиКонтроллера(линия внизу)
         let navigationBar = navigationController?.navigationBar
         let navigationBarAppearance = UINavigationBarAppearance()
-        //MARK: УДАЛИТЬ - с этм цветом shadowColor sпочему-то не работает
-//        navigationBarAppearance.shadowColor = .init(red: 60, green: 60, blue: 67, alpha: 0.29)
         navigationBarAppearance.shadowColor = .lightGray
         navigationBar?.scrollEdgeAppearance = navigationBarAppearance
         
-        navigationBar?.prefersLargeTitles = true
-        navigationItem.largeTitleDisplayMode = .always
         navigationItem.title = "Сегодня:"
         navigationItem.rightBarButtonItem = createBarButton
         navigationItem.leftBarButtonItem = reloadBarButton
@@ -80,13 +80,12 @@ class HabitsViewController: UIViewController {
     
     @objc func createButtonAction() {
         if let vc = storyboard?.instantiateViewController(withIdentifier: "HabitViewController") {
-            print("ok")
             navigationController?.pushViewController(vc, animated: true)
         }
     }
     
     @objc func reloadButtonAction() {
-        //MARK: УДАЛИТЬ-функция кнопки для обнуления массива привычек
+        //MARK: функция кнопки для обнуления массива привычек для удобства тестирования
         HabitsStore.shared.habits = []
         habitsCollectionView.reloadData()
     }
@@ -119,8 +118,7 @@ extension HabitsViewController: UICollectionViewDataSource {
         switch indexPath.section {
         case 0:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: progressCellID, for: indexPath) as! ProgressCollectionViewCell
-            cell.percentLabel.text = String(NSString(format: "%.0f", HabitsStore.shared.todayProgress*100)) + "%"
-            cell.progressBar.progress = HabitsStore.shared.todayProgress
+            cell.reloadCell()
             return cell
         case 1:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: habitCellID, for: indexPath) as! HabitCollectionViewCell
@@ -166,12 +164,12 @@ extension HabitsViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         switch indexPath.section {
         case 0:
-            print("section \(indexPath.section), item \(indexPath.item)")
+            return
         case 1:
-            print("section \(indexPath.section), item \(indexPath.item)")
             if let vc = storyboard?.instantiateViewController(withIdentifier: "HabitDetailsViewController") as? HabitDetailsViewController {
                 vc.title = "\(HabitsStore.shared.habits[indexPath.item].name)"
                 vc.habit = HabitsStore.shared.habits[indexPath.item]
+                vc.index = indexPath.item
                 navigationController?.pushViewController(vc, animated: true)
             }
         default:

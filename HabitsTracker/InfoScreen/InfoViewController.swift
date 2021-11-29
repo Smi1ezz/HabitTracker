@@ -40,7 +40,6 @@ class InfoViewController: UIViewController {
 """
         info.bodyStyle()
         info.textAlignment = .left
-        
         info.numberOfLines = 0
         return info
     }()

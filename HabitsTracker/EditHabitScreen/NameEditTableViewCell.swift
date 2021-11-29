@@ -18,7 +18,6 @@ class NameEditTableViewCell: UITableViewCell {
         return name
     }()
     
-    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupNameCell()
@@ -39,33 +38,23 @@ class NameEditTableViewCell: UITableViewCell {
         nameTextField.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             nameTextField.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            nameTextField.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 15)
+            nameTextField.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 15),
+            nameTextField.heightAnchor.constraint(equalToConstant: 44)
         ])
     }
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-       
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-        
-    }
-    
 }
 
 //MARK: textfield delegate func
 extension NameEditTableViewCell: UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        delegate.habit.name = nameTextField.text ?? "name from EditVC Return"
+        delegate.habit.name = nameTextField.text ?? "default"
         nameTextField.resignFirstResponder()
         return true
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        delegate.habit.name = nameTextField.text ?? "name from EditVC didEnd"
+        delegate.habit.name = nameTextField.text ?? "default"
         nameTextField.resignFirstResponder()
     }
 }
