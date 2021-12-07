@@ -24,13 +24,19 @@ extension UILabel {
     }
     
     func footnoteStyle() {
-        self.font = UIFont.systemFont(ofSize: 13, weight: .semibold)
-        self.textColor = .black
+        self.font = UIFont.systemFont(ofSize: 13, weight: .regular)
+        self.textColor = UIColor.appColour(name: .sysGray)
     }
     
     func statusFootnoteStyle() {
-        self.font = UIFont.systemFont(ofSize: 13, weight: .regular)
+        self.font = UIFont.systemFont(ofSize: 13, weight: .semibold)
         self.textColor = UIColor.appColour(name: .sysGray)
+    }
+    
+    func footnoteBlackStyle() {
+        self.font = UIFont.systemFont(ofSize: 13, weight: .semibold)
+        self.textColor = .black
+        self.text = self.text?.uppercased()
     }
     
     func captionStyle() {

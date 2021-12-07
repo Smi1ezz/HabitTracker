@@ -47,6 +47,7 @@ class InfoViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationItem.largeTitleDisplayMode = .never
         navigationItem.title = "Информация"
         setupScrollView()
         setupConstaraints()

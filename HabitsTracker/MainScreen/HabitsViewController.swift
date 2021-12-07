@@ -39,12 +39,10 @@ class HabitsViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.navigationBar.prefersLargeTitles = true
         habitsCollectionView.reloadData()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        navigationController?.navigationBar.prefersLargeTitles = false
     }
     
     private func setupNavigationBar() {
@@ -53,8 +51,10 @@ class HabitsViewController: UIViewController {
         let navigationBarAppearance = UINavigationBarAppearance()
         navigationBarAppearance.shadowColor = .lightGray
         navigationBar?.scrollEdgeAppearance = navigationBarAppearance
+        navigationBar?.prefersLargeTitles = true
+        navigationItem.largeTitleDisplayMode = .always
         
-        navigationItem.title = "Сегодня:"
+        navigationItem.title = "Сегодня"
         navigationItem.rightBarButtonItem = createBarButton
         navigationItem.leftBarButtonItem = reloadBarButton
         
@@ -79,7 +79,8 @@ class HabitsViewController: UIViewController {
     }
     
     @objc func createButtonAction() {
-        if let vc = storyboard?.instantiateViewController(withIdentifier: "HabitViewController") {
+        if let vc = storyboard?.instantiateViewController(withIdentifier: "CreateVC") as? HabitViewController {
+            vc.viewControllerState = .create
             navigationController?.pushViewController(vc, animated: true)
         }
     }
@@ -89,7 +90,6 @@ class HabitsViewController: UIViewController {
         HabitsStore.shared.habits = []
         habitsCollectionView.reloadData()
     }
-    //end
 }
 
 extension HabitsViewController: UICollectionViewDelegate {
@@ -119,6 +119,7 @@ extension HabitsViewController: UICollectionViewDataSource {
         case 0:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: progressCellID, for: indexPath) as! ProgressCollectionViewCell
             cell.reloadCell()
+            
             return cell
         case 1:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: habitCellID, for: indexPath) as! HabitCollectionViewCell

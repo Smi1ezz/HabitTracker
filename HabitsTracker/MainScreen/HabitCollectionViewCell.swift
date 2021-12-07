@@ -27,7 +27,7 @@ class HabitCollectionViewCell: UICollectionViewCell {
                 }
 
                 circleButton.tintColor = habit.color
-                
+                nameLabel.textColor = circleButton.tintColor
             }
         }
     }
@@ -35,6 +35,7 @@ class HabitCollectionViewCell: UICollectionViewCell {
     let nameLabel: UILabel = {
         let name = UILabel()
         name.headlineStyle()
+        name.numberOfLines = 2
         return name
     }()
     
@@ -46,7 +47,7 @@ class HabitCollectionViewCell: UICollectionViewCell {
     
     let counterLabel: UILabel = {
         let counter = UILabel()
-        counter.statusFootnoteStyle()
+        counter.footnoteStyle()
         return counter
     }()
     
@@ -84,11 +85,12 @@ class HabitCollectionViewCell: UICollectionViewCell {
         NSLayoutConstraint.activate([
             nameLabel.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor, constant: 20),
             nameLabel.leadingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.leadingAnchor, constant: 20),
+            nameLabel.trailingAnchor.constraint(equalTo: circleButton.leadingAnchor, constant: -20),
             
             timerLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 4),
             timerLabel.leadingAnchor.constraint(equalTo: nameLabel.leadingAnchor),
             
-            counterLabel.topAnchor.constraint(equalTo: timerLabel.bottomAnchor, constant: 30),
+            counterLabel.topAnchor.constraint(lessThanOrEqualTo: timerLabel.bottomAnchor, constant: 30),
             counterLabel.leadingAnchor.constraint(equalTo: nameLabel.leadingAnchor),
             counterLabel.bottomAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.bottomAnchor, constant: -20),
             

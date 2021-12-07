@@ -26,6 +26,7 @@ class ProgressCollectionViewCell: UICollectionViewCell {
     let progressBar: UIProgressView = {
         let progress = UIProgressView(progressViewStyle: .default)
         progress.tintColor = .appColour(name: .purple)
+        progress.backgroundColor = UIColor(named: "progressColor")
         progress.progress = HabitsStore.shared.todayProgress
         return progress
     }()
@@ -40,7 +41,6 @@ class ProgressCollectionViewCell: UICollectionViewCell {
     }
     
     func setupProgressCell() {
-//        reloadInputViews()
         contentView.backgroundColor = .white
         contentView.addSubview(motivationLabel)
         contentView.addSubview(percentLabel)

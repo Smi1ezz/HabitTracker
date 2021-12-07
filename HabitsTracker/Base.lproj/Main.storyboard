@@ -110,6 +110,21 @@
             </objects>
             <point key="canvasLocation" x="1483" y="284"/>
         </scene>
+        <!--Habit View Controller-->
+        <scene sceneID="oTA-5w-Jei">
+            <objects>
+                <viewController restorationIdentifier="CreateVC" storyboardIdentifier="CreateVC" id="xuG-F8-KOk" customClass="HabitViewController" customModule="HabitsTracker" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Hza-nF-ejH">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="KZl-7c-25J"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9Q1-EG-zg3" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2236" y="-1779"/>
+        </scene>
         <!--CreateViewController-->
         <scene sceneID="HW0-s2-PMK">
             <objects>

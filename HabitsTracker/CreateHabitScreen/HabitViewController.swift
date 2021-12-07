@@ -2,17 +2,34 @@
 //  CreateViewController.swift
 //  HabitsTracker
 //
-//  Created by admin on 27.10.2021.
+//  Created by admin on 06.12.2021.
 //
 
 import UIKit
 
 class HabitViewController: UIViewController {
     
-    lazy var habit = Habit(name: "default", date: Date(), color: .orange)
+    var viewControllerState: HabitViewControllerState = .create
     
-    let createTableView = UITableView(frame: .zero, style: .grouped)
+    var delegate: HabitDetailsViewController!
     
+    lazy var habit: Habit = {
+        if viewControllerState == .create {
+            habit = Habit(name: "default", date: Date(), color: .orange)
+            return habit
+        } else {
+            var delegateHabit = delegate.habit
+                
+            habit = Habit(name: delegateHabit?.name ?? "default", date: delegateHabit?.date ?? Date(), trackDates: delegateHabit?.trackDates ?? [], color: delegateHabit?.color ?? .black)
+            
+            return habit
+        }
+    }()
+       
+    let scroll = UIScrollView()
+    
+    let container = HabitDetailView()
+
     lazy var saveBarButton: UIBarButtonItem = {
         let save = UIBarButtonItem(title: "Сохранить", style: .done, target: self, action: #selector(saveButtonAction))
         
@@ -24,18 +41,17 @@ class HabitViewController: UIViewController {
        return cancel
     }()
     
-    private let nameTVCellID = "nameTVCellID"
-    private let colorTVCellID = "colorTVCellID"
-    private let dateTTVCellID = "dateTTVCellID"
-
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Создать"
-        view.addSubview(createTableView)
-        createTableView.separatorColor = .white
-        createTableView.backgroundColor = .white
-        setupTableView()
-        setupTableViewConstraints()
+        if viewControllerState == .create {
+            self.title = "Создать"
+        } else {
+            self.title = "Править"
+        }
+        container.setupConstraints()
+        container.delegate = self
+        setupScrollView()
+        setupScrollConstraints()
         setupNavBar()
         self.hideKeyboard()
     }
@@ -54,115 +70,81 @@ class HabitViewController: UIViewController {
         NotificationCenter.default.removeObserver(self)
     }
     
-    func setupTableView() {
-        createTableView.translatesAutoresizingMaskIntoConstraints = false
-        createTableView.register(NameTableViewCell.self, forCellReuseIdentifier: nameTVCellID)
-        createTableView.register(ColorTableViewCell.self, forCellReuseIdentifier: colorTVCellID)
-        createTableView.register(DateTableViewCell.self, forCellReuseIdentifier: dateTTVCellID)
-        createTableView.dataSource = self
-        createTableView.delegate = self
-
+    private func setupScrollView() {
+        view.addSubview(scroll)
+        
+        if viewControllerState == .edit {
+            container.setupEditState()
+        }
+        
+        scroll.addSubview(container)
+        scroll.showsVerticalScrollIndicator = false
     }
     
-    func setupTableViewConstraints() {
+    private func setupScrollConstraints() {
+        scroll.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            createTableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            createTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            createTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            createTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+            scroll.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            scroll.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            scroll.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            scroll.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            
+            container.topAnchor.constraint(equalTo: scroll.topAnchor),
+            container.leadingAnchor.constraint(equalTo: scroll.leadingAnchor),
+            container.trailingAnchor.constraint(equalTo: scroll.trailingAnchor),
+            container.bottomAnchor.constraint(equalTo: scroll.bottomAnchor),
+            container.widthAnchor.constraint(equalTo: scroll.widthAnchor),
+            container.heightAnchor.constraint(equalTo: scroll.heightAnchor)
         ])
     }
     
     private func setupNavBar() {
         navigationItem.rightBarButtonItem = saveBarButton
         navigationItem.leftBarButtonItem = cancelBarButton
+        navigationItem.largeTitleDisplayMode = .never
 
     }
     
     @objc func keyboardWillShow(notification: NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            createTableView.contentInset.bottom = keyboardSize.height
-            createTableView.verticalScrollIndicatorInsets = UIEdgeInsets(top: 0, left: 0, bottom: keyboardSize.height, right: 0)
+            scroll.contentInset.bottom = keyboardSize.height
         }
-        
     }
     
     @objc func keyboardWillHide(notification: NSNotification) {
-        createTableView.contentInset.bottom = .zero
-        createTableView.verticalScrollIndicatorInsets = .zero
+        scroll.contentInset.bottom = .zero
     }
     
     @objc func saveButtonAction() {
-        if habit.name != "default" && habit.name != "" && habit.color != .black && habit.date != Date() {
-            let newHabit = Habit(name: habit.name,
-                                 date: habit.date,
-                                 color: habit.color)
-            
-            let store = HabitsStore.shared
-            
-            store.habits.append(newHabit)
-            
-            navigationController?.popViewController(animated: true)
+        
+        if viewControllerState == .create {
+            if habit.name != "default" && habit.name != "" {
+                let newHabit = Habit(name: habit.name,
+                                     date: habit.date,
+                                     color: habit.color)
+                
+                let store = HabitsStore.shared
+                
+                store.habits.append(newHabit)
+                
+                navigationController?.popViewController(animated: true)
+            }
+        } else {
+            if delegate.habit.name != habit.name || delegate.habit.color != habit.color || delegate.habit.date != habit.date {
+                
+                delegate.habit.name = habit.name
+                delegate.habit.color = habit.color
+                delegate.habit.date = habit.date
+                delegate.detailTableView.reloadData()
+                HabitsStore.shared.save()
+                delegate.navigationController?.popToRootViewController(animated: true)
+            }
         }
     }
     
     @objc func cancelButtonAction() {
         navigationController?.popViewController(animated: true)
     }
-    
+
 }
-
-//MARK: datasourse
-extension HabitViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        switch section {
-        case 0:
-            return "Название".uppercased()
-        case 1:
-            return "Цвет".uppercased()
-        case 2:
-            return "Время".uppercased()
-        default:
-            return "".uppercased()
-        }
-    }
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 3
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        switch indexPath.section {
-        case 0:
-            let cell = tableView.dequeueReusableCell(withIdentifier: nameTVCellID) as! NameTableViewCell
-            cell.delegate = self
-            
-            return cell
-        case 1:
-            let cell = tableView.dequeueReusableCell(withIdentifier: colorTVCellID) as! ColorTableViewCell
-            cell.delegate = self
-            
-            return cell
-        case 2:
-            let cell = tableView.dequeueReusableCell(withIdentifier: dateTTVCellID) as! DateTableViewCell
-            cell.delegate = self
-                habit.date = cell.datePicker.date
-            
-            return cell
-        default:
-            return UITableViewCell()
-        }
-    }
-}
-
-//MARK: delegate
-extension HabitViewController: UITableViewDelegate {
-    
-}
-
-
 
