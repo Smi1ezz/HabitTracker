@@ -7,6 +7,11 @@
 
 import UIKit
 
+enum HabitViewControllerState {
+    case create
+    case edit
+}
+
 class HabitViewController: UIViewController {
     
     var viewControllerState: HabitViewControllerState = .create
