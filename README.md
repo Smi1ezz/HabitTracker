@@ -1,24 +1,22 @@
-# HabitTracker
-### The habit tracker is designed to make you better
-
-<img src="https://user-images.githubusercontent.com/81897699/189888288-35d4b154-05b6-4098-9e07-772958b9caa4.png" width=20% height=20%> <img src="https://user-images.githubusercontent.com/81897699/189889241-6f0def96-a31e-4930-9230-48aa39379d9b.png" width=20% height=20%> 
+# HabitTracker - designed to make you better!
 
 ## Write down new habits. It's not difficult.
 
+<img src="https://user-images.githubusercontent.com/81897699/189955661-a59df269-26fb-46ac-a8d6-55b3b9a53028.png" width=20% height=20%> 
 
-## Mark the ones already completed today. Another step to success.
+## Mark the ones already completed today and follow your progress. Another step to success.
 
+<img src="https://user-images.githubusercontent.com/81897699/189956116-47b5e6c7-2532-43aa-8a09-2f458331d368.png" width=20% height=20%> <img src="https://user-images.githubusercontent.com/81897699/189957340-1df4347f-c553-495a-9742-55f4797db5e0.png" width=20% height=20%>  
 
-## Customize entries by color
+## Add, Delete, Correct and Customize entries
 
-## Add, Delete and Correct entries
+<img src="https://user-images.githubusercontent.com/81897699/189956412-083e9b2d-f223-4016-a278-1dac6e9c0a03.png" width=20% height=20%> <img src="https://user-images.githubusercontent.com/81897699/189956484-58eddeb0-58d7-4320-b37a-797111af7f15.png" width=20% height=20%> 
 
 ### 21 days to new life
 
 # What's inside
-- The Yandex Geocoder API is used to determine coordinates by the name of the city. 
-- Openweathermap API for getting weather forecasts. 
-- Geolocation service and data storage in UserDefaults are involved. 
-- REST API. URLSession.
-- UI on SnapKit.
-- Code purity via SwiftLint.
+- MVC.
+- Storyboard for ViewControlles scheme and constraints for Views layout.
+- UIViewController states.
+- UIColorPickerViewController, UIDatePicker. 
+- UserDefaults
